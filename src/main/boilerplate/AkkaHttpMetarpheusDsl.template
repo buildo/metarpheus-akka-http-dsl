@@ -1,0 +1,17 @@
+package monadicctrl
+
+trait AkkaHttpMetarpheusDsl {
+  import akka.http.scaladsl.marshalling.ToResponseMarshaller
+  import akka.http.scaladsl.marshalling.ToEntityMarshaller
+  import akka.http.scaladsl.server.directives.RouteDirectives.complete
+
+  def returns[R: ToEntityMarshaller](implicit m: ToResponseMarshaller[FutureCtrlFlow[R]]) = new {
+    def ctrl(f: () => FutureCtrlFlow[R]) = complete(f())
+
+    [#def ctrl[[#P1#]](f: ([#P1#]) => FutureCtrlFlow[R]) =
+      ([#p1: P1#]) => complete(f([#p1#]))#
+    ]
+  }
+}
+
+object AkkaHttpMetarpheusDsl extends AkkaHttpMetarpheusDsl
