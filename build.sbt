@@ -1,3 +1,4 @@
+enablePlugins(GitVersioning)
 enablePlugins(spray.boilerplate.BoilerplatePlugin)
 
 lazy val root = project.in(file("."))
